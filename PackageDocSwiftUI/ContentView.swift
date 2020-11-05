@@ -9,24 +9,19 @@ import SwiftUI
 import SwiftUIImagePickerController
 
 struct ContentView: View {
-//    @Binding var document: PackageDocSwiftUIDocument
     @ObservedObject var viewModel: NoteViewModel
     
-    init(document: Binding<PackageDocSwiftUIDocument>) {
-        self.viewModel = NoteViewModel(doc: document)
-    }
-
     var body: some View {
         VStack {
-            TextPartView(text: $viewModel.document.note.notes)
+            DocumentTextView(text: $viewModel.noteString)
                 .frame(width: UIScreen.main.bounds.width, height: 200)
-            ImagePartView(image: $viewModel.document.note.image)
+            DocumentImageView(image: $viewModel.image)
                 .frame(width: UIScreen.main.bounds.width, height: 200)
         }
     }
 }
 
-struct TextPartView: View {
+struct DocumentTextView: View {
     @Binding var text: String
     var body: some View {
         TextEditor(text: $text)
@@ -35,27 +30,19 @@ struct TextPartView: View {
     }
 }
 
-struct ImagePartView: View {
+struct DocumentImageView: View {
     @Binding var image: UIImage?
     @State private var metaData:NSDictionary? = nil
     @State private var showPhotoPicker = false
     var body: some View {
         Group {
-            if (image == nil) {
-                Text("no Image")
-                    .border(Color.gray)
-
-                    .onTapGesture {
-                        showPhotoPicker.toggle()
-                    }
-            } else {
-                Image(uiImage: image!)
-                    .resizable()
-                    .scaledToFit()
-                    .onTapGesture {
-                        showPhotoPicker.toggle()
-                    }
-            }
+            Image(uiImage:  image!)
+                .resizable()
+                .scaledToFit()
+                .border(Color.gray)
+                .onTapGesture {
+                    showPhotoPicker.toggle()
+                }
         }
         .fullScreenCover(isPresented: $showPhotoPicker) {
             SwiftUIImagePickerController(image: $image, metaData: $metaData, showCameraView: $showPhotoPicker)
@@ -66,6 +53,6 @@ struct ImagePartView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(document: .constant(PackageDocSwiftUIDocument()))
+        ContentView(viewModel: NoteViewModel(noteDoc: .constant(PackageDocSwiftUIDocument())))
     }
 }

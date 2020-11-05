@@ -10,31 +10,37 @@ import SwiftUI
 
 class NoteViewModel: ObservableObject {
 //    let note: Note
-    @Binding var document:PackageDocSwiftUIDocument
-
-    var editableString: String {
-        get {
-            return document.note.notes
-        }
-        set {
-            document.note.notes = newValue
-        }
+//    @Published var note: Note
+    @Binding var noteDoc: PackageDocSwiftUIDocument
+    
+    init(noteDoc: Binding<PackageDocSwiftUIDocument>){
+//        init(note: Note) {
+        self._noteDoc = noteDoc
+//        self.note = note
     }
     
-    var displayImage: UIImage {
+    var noteString: String {
         get {
-            if let image = document.note.image {
+            return noteDoc.noteString
+        }
+        set {
+            print("set \(newValue)")
+            noteDoc.noteString = newValue
+        }
+    }
+
+    var image: UIImage? {
+        get {
+            if let image = noteDoc.image {
                 return image
             }
-            return UIImage(systemName: "nosign")!
+            let largeConfig = UIImage.SymbolConfiguration(scale: .large)
+            return UIImage(systemName: "power", withConfiguration: largeConfig)!
         }
         set {
-            document.note.image = newValue
+            noteDoc.image = newValue
         }
     }
     
-    init(doc: Binding<PackageDocSwiftUIDocument>) {
-        self._document = doc
-    }
-    
+
 }

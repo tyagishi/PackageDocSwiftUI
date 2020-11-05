@@ -18,14 +18,16 @@ struct PackageDocSwiftUIDocument: FileDocument {
     static let textFileName: String = "Text.txt"
     static let imageFileName: String = "Image.png"
     
-    var note: Note
-
-    init() {
-        self.note = Note(notes: "", image: nil)
-    }
+    var noteString: String = ""
+    var image: UIImage? = nil
 
     static var readableContentTypes: [UTType] { [.notesDoc] }
 
+    init() {
+        noteString = ""
+        image = nil
+    }
+    
     init(configuration: ReadConfiguration) throws {
         let docWrapper = configuration.file
         
@@ -38,20 +40,21 @@ struct PackageDocSwiftUIDocument: FileDocument {
             guard let imageData = imageWrapper.regularFileContents else { fatalError("failed to get image data") }
             image = UIImage(data: imageData)
         }
-
-        self.note = Note(notes: string, image: image)
+        self.noteString = string
+        self.image = image
     }
     
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
+        print("----- save -----")
         let docWrapper = FileWrapper.init(directoryWithFileWrappers: [String:FileWrapper]())
         
-        guard let textData = note.notes.data(using: .utf8) else { fatalError("failed to get text data") }
+        guard let textData = noteString.data(using: .utf8) else { fatalError("failed to get text data") }
         let noteWrapper = FileWrapper.init(regularFileWithContents: textData)
         noteWrapper.preferredFilename = PackageDocSwiftUIDocument.textFileName
         docWrapper.addFileWrapper(noteWrapper)
 
-        if note.image != nil {
-            guard let imageData = note.image?.pngData() else { fatalError("failed to get png data") }
+        if let image = self.image {
+            guard let imageData = image.pngData() else { fatalError("failed to get png data") }
             let imageWrapper = FileWrapper.init(regularFileWithContents: imageData)
             imageWrapper.preferredFilename = PackageDocSwiftUIDocument.imageFileName
             docWrapper.addFileWrapper(imageWrapper)
