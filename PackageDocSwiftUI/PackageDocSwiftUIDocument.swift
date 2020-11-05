@@ -19,11 +19,9 @@ struct PackageDocSwiftUIDocument: FileDocument {
     static let imageFileName: String = "Image.png"
     
     var note: Note
-//    var text: String
 
-    init(text: String = "Hello, world!") {
-//        self.text = text
-        self.note = Note(notes: "string", image: nil)
+    init() {
+        self.note = Note(notes: "", image: nil)
     }
 
     static var readableContentTypes: [UTType] { [.notesDoc] }

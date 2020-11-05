@@ -3,11 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		364AEAD32553AAFA008F6F84 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 364AEAD22553AAFA008F6F84 /* Note.swift */; };
+		364AEAD72553BE34008F6F84 /* SwiftUIImagePickerController in Frameworks */ = {isa = PBXBuildFile; productRef = 364AEAD62553BE34008F6F84 /* SwiftUIImagePickerController */; };
+		364AEADA2553CFC2008F6F84 /* NoteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 364AEAD92553CFC1008F6F84 /* NoteViewModel.swift */; };
 		36FFCD522553A48300F5BA60 /* PackageDocSwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FFCD512553A48300F5BA60 /* PackageDocSwiftUIApp.swift */; };
 		36FFCD542553A48300F5BA60 /* PackageDocSwiftUIDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FFCD532553A48300F5BA60 /* PackageDocSwiftUIDocument.swift */; };
 		36FFCD562553A48300F5BA60 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FFCD552553A48300F5BA60 /* ContentView.swift */; };
@@ -17,6 +19,7 @@
 
 /* Begin PBXFileReference section */
 		364AEAD22553AAFA008F6F84 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
+		364AEAD92553CFC1008F6F84 /* NoteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewModel.swift; sourceTree = "<group>"; };
 		36FFCD4E2553A48300F5BA60 /* PackageDocSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PackageDocSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		36FFCD512553A48300F5BA60 /* PackageDocSwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageDocSwiftUIApp.swift; sourceTree = "<group>"; };
 		36FFCD532553A48300F5BA60 /* PackageDocSwiftUIDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageDocSwiftUIDocument.swift; sourceTree = "<group>"; };
@@ -31,6 +34,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				364AEAD72553BE34008F6F84 /* SwiftUIImagePickerController in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +67,7 @@
 				36FFCD5C2553A48400F5BA60 /* Info.plist */,
 				36FFCD592553A48400F5BA60 /* Preview Content */,
 				364AEAD22553AAFA008F6F84 /* Note.swift */,
+				364AEAD92553CFC1008F6F84 /* NoteViewModel.swift */,
 			);
 			path = PackageDocSwiftUI;
 			sourceTree = "<group>";
@@ -91,6 +96,9 @@
 			dependencies = (
 			);
 			name = PackageDocSwiftUI;
+			packageProductDependencies = (
+				364AEAD62553BE34008F6F84 /* SwiftUIImagePickerController */,
+			);
 			productName = PackageDocSwiftUI;
 			productReference = 36FFCD4E2553A48300F5BA60 /* PackageDocSwiftUI.app */;
 			productType = "com.apple.product-type.application";
@@ -118,6 +126,9 @@
 				Base,
 			);
 			mainGroup = 36FFCD452553A48300F5BA60;
+			packageReferences = (
+				364AEAD52553BE34008F6F84 /* XCRemoteSwiftPackageReference "SwiftUIImagePickerController" */,
+			);
 			productRefGroup = 36FFCD4F2553A48300F5BA60 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -144,6 +155,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				364AEADA2553CFC2008F6F84 /* NoteViewModel.swift in Sources */,
 				36FFCD542553A48300F5BA60 /* PackageDocSwiftUIDocument.swift in Sources */,
 				36FFCD522553A48300F5BA60 /* PackageDocSwiftUIApp.swift in Sources */,
 				36FFCD562553A48300F5BA60 /* ContentView.swift in Sources */,
@@ -336,6 +348,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		364AEAD52553BE34008F6F84 /* XCRemoteSwiftPackageReference "SwiftUIImagePickerController" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/tyagishi/SwiftUIImagePickerController";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.5.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		364AEAD62553BE34008F6F84 /* SwiftUIImagePickerController */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 364AEAD52553BE34008F6F84 /* XCRemoteSwiftPackageReference "SwiftUIImagePickerController" */;
+			productName = SwiftUIImagePickerController;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 36FFCD462553A48300F5BA60 /* Project object */;
 }
