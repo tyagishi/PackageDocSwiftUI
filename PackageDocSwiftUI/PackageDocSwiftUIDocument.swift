@@ -9,31 +9,56 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 extension UTType {
-    static var exampleText: UTType {
-        UTType(importedAs: "com.example.plain-text")
+    static var notesDoc: UTType {
+        UTType(exportedAs: "com.apple.dts.notesDoc")
     }
 }
 
 struct PackageDocSwiftUIDocument: FileDocument {
-    var text: String
+    static let textFileName: String = "Text.txt"
+    static let imageFileName: String = "Image.png"
+    
+    var note: Note
+//    var text: String
 
     init(text: String = "Hello, world!") {
-        self.text = text
+//        self.text = text
+        self.note = Note(notes: "string", image: nil)
     }
 
-    static var readableContentTypes: [UTType] { [.exampleText] }
+    static var readableContentTypes: [UTType] { [.notesDoc] }
 
     init(configuration: ReadConfiguration) throws {
-        guard let data = configuration.file.regularFileContents,
-              let string = String(data: data, encoding: .utf8)
-        else {
-            throw CocoaError(.fileReadCorruptFile)
+        let docWrapper = configuration.file
+        
+        guard let noteWrapper = docWrapper.fileWrappers![PackageDocSwiftUIDocument.textFileName] else { fatalError("failed to get notewrapper") }
+        guard let textData = noteWrapper.regularFileContents else { fatalError("failed to get text data") }
+        guard let string = String.init(data: textData, encoding: .utf8) else { fatalError("failed to unarchive text data") }
+
+        var image: UIImage? = nil
+        if let imageWrapper = docWrapper.fileWrappers![PackageDocSwiftUIDocument.imageFileName] {
+            guard let imageData = imageWrapper.regularFileContents else { fatalError("failed to get image data") }
+            image = UIImage(data: imageData)
         }
-        text = string
+
+        self.note = Note(notes: string, image: image)
     }
     
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
-        let data = text.data(using: .utf8)!
-        return .init(regularFileWithContents: data)
+        let docWrapper = FileWrapper.init(directoryWithFileWrappers: [String:FileWrapper]())
+        
+        guard let textData = note.notes.data(using: .utf8) else { fatalError("failed to get text data") }
+        let noteWrapper = FileWrapper.init(regularFileWithContents: textData)
+        noteWrapper.preferredFilename = PackageDocSwiftUIDocument.textFileName
+        docWrapper.addFileWrapper(noteWrapper)
+
+        if note.image != nil {
+            guard let imageData = note.image?.pngData() else { fatalError("failed to get png data") }
+            let imageWrapper = FileWrapper.init(regularFileWithContents: imageData)
+            imageWrapper.preferredFilename = PackageDocSwiftUIDocument.imageFileName
+            docWrapper.addFileWrapper(imageWrapper)
+        }
+
+        return docWrapper
     }
 }
