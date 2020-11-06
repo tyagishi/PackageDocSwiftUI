@@ -11,7 +11,7 @@ import SwiftUI
 struct PackageDocSwiftUIApp: App {
     var body: some Scene {
         DocumentGroup(newDocument: PackageDocSwiftUIDocument()) { file in
-            let viewModel = NoteViewModel(noteDoc: file.$document)
+            let viewModel = DocumentViewModel(noteDoc: file.$document)
             ContentView(viewModel: viewModel)
         }
     }
